@@ -17,7 +17,7 @@
             class="form-control"
             name="bid"
             placeholder="300.00"
-            v-model="bidAmount"
+            v-model.number="bidAmount"
             min="1"
           />
           <button type="button" class="btn btn-success btn-block" @click="bid()">Bid</button>
@@ -25,7 +25,7 @@
             type="button"
             class="btn btn-danger btn-block"
             @click="deleteCar()"
-            v-if="car.userId == $auth.user.sub"
+            v-if="$auth.user && (car.userId == $auth.user.sub)"
           >Delete</button>
         </div>
       </div>
@@ -56,7 +56,7 @@ export default {
     },
     bid() {
       let tempCar = JSON.parse(JSON.stringify(this.car));
-      tempCar.price = tempCar.price + +this.bidAmount;
+      tempCar.price = tempCar.price + this.bidAmount;
       this.$store.dispatch("bidOnCar", tempCar);
     }
   },
